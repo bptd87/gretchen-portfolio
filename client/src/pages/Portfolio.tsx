@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { FadeInNextImage } from "@/components/FadeInMedia";
 import { resolveMediaUrl } from "@/content/media";
 import { Link } from "wouter";
 import { getProjectSlug, projects } from "@/content/projects";
@@ -38,7 +38,7 @@ export default function Portfolio() {
                 <Link key={project.id} href={`/portfolio/${getProjectSlug(project)}`}>
                   <div className="group cursor-pointer">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)] transition-transform duration-300 group-hover:-translate-y-1">
-                      <Image
+                      <FadeInNextImage
                         src={resolveMediaUrl(project.cardImage ?? project.heroImage) ?? project.cardImage ?? project.heroImage}
                         alt={
                           project.cardAltText ??

@@ -39,7 +39,8 @@ export function resolveProjectMedia(project: Project): Project {
 }
 
 export const blobPathGuide = {
-  pages: "pages/<page-slug>/<asset-name>.<ext>",
-  projects: "projects/<project-slug>/<section>/<asset-name>.<ext>",
+  pages: "web/pages/<page-slug>/<asset-name>.webp and originals/pages/<page-slug>/<asset-name>.<ext>",
+  projects:
+    "web/projects/<project-slug>/<section>/<asset-name>.webp and originals/projects/<project-slug>/<section>/<asset-name>.<ext>",
   sections: ["card", "hero", "renderings", "research", "drafting", "production"],
 } as const;

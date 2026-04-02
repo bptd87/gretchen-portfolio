@@ -1,6 +1,7 @@
 import { extname } from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { put } from "@vercel/blob";
+import sharp from "sharp";
 import { aboutPageContent } from "../client/src/content/pages/about";
 import { resumePageContent } from "../client/src/content/pages/resume";
 import { getProjectSlug, projects } from "../client/src/content/projects/index";
@@ -8,6 +9,13 @@ import { getProjectSlug, projects } from "../client/src/content/projects/index";
 type MediaEntry = {
   source: string;
   pathname: string;
+};
+
+type MediaVariant = {
+  originalPathname: string;
+  webPathname: string;
+  maxWidth: number;
+  quality: number;
 };
 
 function sanitizeFilenamePart(value: string) {
@@ -36,6 +44,40 @@ function getRenderingBlockSection(title?: string) {
   if (normalized.includes("drafting")) return "drafting";
 
   return "renderings";
+}
+
+function inferImageVariant(pathname: string): MediaVariant {
+  const segments = pathname.split("/");
+  const filename = segments.pop() ?? "asset.bin";
+  const baseName = filename.replace(/\.[^.]+$/, "");
+  const section = segments.at(-1) ?? "misc";
+
+  const maxWidthBySection: Record<string, number> = {
+    card: 1400,
+    hero: 2200,
+    renderings: 1800,
+    research: 1600,
+    drafting: 1800,
+    production: 1800,
+    about: 1600,
+  };
+
+  const qualityBySection: Record<string, number> = {
+    card: 72,
+    hero: 78,
+    renderings: 76,
+    research: 74,
+    drafting: 78,
+    production: 76,
+    about: 76,
+  };
+
+  return {
+    originalPathname: ["originals", ...segments, filename].join("/"),
+    webPathname: ["web", ...segments, `${baseName}.webp`].join("/"),
+    maxWidth: maxWidthBySection[section] ?? 1800,
+    quality: qualityBySection[section] ?? 76,
+  };
 }
 
 function buildProjectMediaEntries() {
@@ -110,28 +152,74 @@ async function fetchRemoteFile(url: string) {
   return { buffer, contentType };
 }
 
-async function uploadEntry(entry: MediaEntry) {
+async function loadEntrySource(entry: MediaEntry) {
   if (entry.source.startsWith("/")) {
-    const buffer = await readFile(`./public${entry.source}`);
+    return {
+      buffer: await readFile(`./public${entry.source}`),
+      contentType: "application/pdf",
+    };
+  }
+
+  return fetchRemoteFile(entry.source);
+}
+
+function isOptimizableImage(contentType: string, source: string) {
+  if (contentType.startsWith("image/")) {
+    return !contentType.includes("svg");
+  }
+
+  return /\.(avif|gif|jpe?g|png|webp)$/i.test(source);
+}
+
+async function createWebVariant(
+  buffer: Buffer,
+  variant: MediaVariant
+) {
+  return sharp(buffer, { animated: false })
+    .rotate()
+    .resize({
+      width: variant.maxWidth,
+      withoutEnlargement: true,
+    })
+    .webp({
+      quality: variant.quality,
+      effort: 6,
+    })
+    .toBuffer();
+}
+
+async function uploadEntry(entry: MediaEntry) {
+  const { buffer, contentType } = await loadEntrySource(entry);
+
+  if (!isOptimizableImage(contentType, entry.source)) {
     const blob = await put(entry.pathname, buffer, {
       access: "public",
       addRandomSuffix: false,
       allowOverwrite: true,
-      contentType: "application/pdf",
+      contentType,
     });
 
     return blob.url;
   }
 
-  const { buffer, contentType } = await fetchRemoteFile(entry.source);
-  const blob = await put(entry.pathname, buffer, {
+  const variant = inferImageVariant(entry.pathname);
+  const webBuffer = await createWebVariant(buffer, variant);
+
+  await put(variant.originalPathname, buffer, {
     access: "public",
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType,
   });
 
-  return blob.url;
+  const webBlob = await put(variant.webPathname, webBuffer, {
+    access: "public",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "image/webp",
+  });
+
+  return webBlob.url;
 }
 
 async function main() {

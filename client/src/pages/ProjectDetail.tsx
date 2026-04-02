@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "wouter";
 import { ArrowLeft, ArrowRight, Pause, Play, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FadeInImg, FadeInNextImage } from "@/components/FadeInMedia";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { resolveProjectMedia } from "@/content/media";
@@ -162,23 +162,30 @@ function ProjectSlideshow({
             />
           )}
           <AnimatePresence mode="sync">
-            <motion.img
+            <motion.div
               key={currentImage}
-              src={currentImage}
-              alt={getAltText(currentIndex)}
-              className={`relative z-0 block cursor-pointer ${
+              className={`relative z-0 cursor-pointer ${
                 frameHeightClassName
                   ? "mx-auto h-full max-w-full"
                   : `w-full ${maxHeightClassName}`
-              } ${
-                frameHeightClassName ? "" : ""
-              } ${objectClassName}`}
+              }`}
               onClick={() => onImageClick(currentImage)}
               initial={{ opacity: previousIndex === null ? 1 : 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 1 }}
               transition={{ duration: 1.25, ease: "easeInOut" }}
-            />
+            >
+              <FadeInImg
+                src={currentImage}
+                alt={getAltText(currentIndex)}
+                resetKey={currentImage}
+                className={`block ${
+                  frameHeightClassName
+                    ? "mx-auto h-full max-w-full"
+                    : `w-full ${maxHeightClassName}`
+                } ${objectClassName}`}
+              />
+            </motion.div>
           </AnimatePresence>
         </div>
 
@@ -255,10 +262,11 @@ function ProjectMasonryGallery({
             className="mb-5 break-inside-avoid cursor-pointer overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)]"
             onClick={() => onImageClick(image)}
           >
-            <img
+            <FadeInImg
               src={image}
               alt={getAltText(index)}
               className="block w-full object-contain"
+              resetKey={image}
             />
           </div>
         ))}
@@ -433,13 +441,14 @@ export default function ProjectDetail() {
                         </p>
                       )}
                       <div className="flex justify-center">
-                        <img
+                        <FadeInImg
                           src={block.images[0]}
                           alt={
                             block.altTexts?.[0] ?? `${resolvedProject.title} rendering 1`
                           }
                           className="block h-[76vh] max-w-full cursor-pointer rounded-[0.65rem] object-contain shadow-[0_18px_50px_rgba(94,74,30,0.07)]"
                           onClick={() => openLightbox(block.images[0])}
+                          resetKey={block.images[0]}
                         />
                       </div>
                     </section>
@@ -504,13 +513,14 @@ export default function ProjectDetail() {
                         className="relative cursor-pointer overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)]"
                         onClick={() => openLightbox(image)}
                       >
-                        <img
+                        <FadeInImg
                           src={image}
                           alt={
                             resolvedProject.galleryAltText?.production?.[index] ??
                             `${resolvedProject.title} production photo ${index + 1}`
                           }
                           className="block max-h-[82vh] w-full object-contain"
+                          resetKey={image}
                         />
                       </div>
                     ))}
@@ -611,7 +621,7 @@ export default function ProjectDetail() {
                     <Link key={entry.id} href={`/portfolio/${getProjectSlug(entry)}`}>
                       <div className="group cursor-pointer">
                         <div className="relative aspect-[4/3] overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)] transition-transform duration-300 group-hover:-translate-y-1">
-                          <Image
+                          <FadeInNextImage
                             src={entry.cardImage ?? entry.heroImage}
                             alt={
                               entry.cardAltText ?? `${entry.title} - Scenic Design by Gretchen Ugalde`
@@ -675,11 +685,12 @@ export default function ProjectDetail() {
               </div>
             </>
           )}
-          <img
+          <FadeInImg
             src={lightboxImage}
             alt="Full size"
             className="max-h-full max-w-full object-contain"
             onClick={(event) => event.stopPropagation()}
+            resetKey={lightboxImage}
           />
         </div>
       )}

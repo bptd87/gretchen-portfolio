@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { FadeInNextImage } from "@/components/FadeInMedia";
 import { resolveMediaUrl } from "@/content/media";
 import { aboutPageContent } from "@/content/pages/about";
 import { Mail } from "lucide-react";
@@ -35,7 +35,7 @@ export default function About() {
             <div className="grid items-start gap-12 md:grid-cols-2">
               <div className="space-y-8">
                 <div className="soft-panel aspect-[3/4] overflow-hidden rounded-[1.5rem]">
-                  <Image
+                  <FadeInNextImage
                     src={resolveMediaUrl(aboutPageContent.images.portrait.src) ?? aboutPageContent.images.portrait.src}
                     alt={aboutPageContent.images.portrait.alt}
                     width={1200}
@@ -46,7 +46,7 @@ export default function About() {
                 </div>
 
                 <div className="soft-panel overflow-hidden rounded-[1.5rem]">
-                  <Image
+                  <FadeInNextImage
                     src={resolveMediaUrl(aboutPageContent.images.grandmother.src) ?? aboutPageContent.images.grandmother.src}
                     alt={aboutPageContent.images.grandmother.alt}
                     width={1400}

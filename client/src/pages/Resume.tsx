@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { FadeInNextImage } from "@/components/FadeInMedia";
 import { resolveMediaUrl } from "@/content/media";
 import { resumePageContent } from "@/content/pages/resume";
 import { projects, getProjectSlug } from "@/content/projects";
@@ -57,7 +57,7 @@ function ResumeProductionCell({ production }: { production: string }) {
       </Link>
 
       <div className="pointer-events-none absolute left-full top-1/2 z-20 ml-6 hidden w-52 overflow-hidden rounded-[1rem] border border-border/80 bg-white/92 opacity-0 shadow-[0_24px_60px_rgba(90,73,33,0.16)] backdrop-blur-md transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 lg:block">
-        <Image
+        <FadeInNextImage
           src={resolveMediaUrl(project.cardImage ?? project.heroImage) ?? project.cardImage ?? project.heroImage}
           alt={project.cardAltText ?? `${project.title} portfolio cover image`}
           width={416}

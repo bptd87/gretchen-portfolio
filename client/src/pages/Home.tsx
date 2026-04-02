@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { FadeInNextImage } from "@/components/FadeInMedia";
 import { resolveMediaUrl } from "@/content/media";
 import { ChevronDown, Image as ImageIcon } from "lucide-react";
 import { getFeaturedProjects, getProjectSlug } from "@/content/projects";
@@ -67,7 +67,7 @@ export default function Home() {
                 >
                   <div className="absolute inset-0">
                     {project.heroImage ? (
-                      <Image
+                      <FadeInNextImage
                         src={resolveMediaUrl(project.heroImage) ?? project.heroImage}
                         alt={`${project.title} scenic design`}
                         fill
