@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getProjectById, getProjectSlug, projects } from "@/data/projects";
+import { resolveProjectMedia } from "@/content/media";
+import { getProjectById, getProjectSlug, projects } from "@/content/projects";
 import ProjectDetail from "@/pages/ProjectDetail";
 import { notFound, redirect } from "next/navigation";
 
@@ -21,12 +22,14 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${project.title} | Gretchen Ugalde`;
-  const contextParts = [project.theatre, project.year].filter(Boolean);
+  const resolvedProject = resolveProjectMedia(project);
+
+  const title = `${resolvedProject.title} | Gretchen Ugalde`;
+  const contextParts = [resolvedProject.theatre, resolvedProject.year].filter(Boolean);
   const description = contextParts.length > 0
-    ? `${project.title} scenic design by Gretchen Ugalde for ${contextParts.join(", ")}. ${project.description}`
-    : `${project.title} scenic design by Gretchen Ugalde. ${project.description}`;
-  const ogImage = project.cardImage ?? project.heroImage;
+    ? `${resolvedProject.title} scenic design by Gretchen Ugalde for ${contextParts.join(", ")}. ${resolvedProject.description}`
+    : `${resolvedProject.title} scenic design by Gretchen Ugalde. ${resolvedProject.description}`;
+  const ogImage = resolvedProject.cardImage ?? resolvedProject.heroImage;
 
   const canonicalSlug = getProjectSlug(project);
 
@@ -44,7 +47,7 @@ export async function generateMetadata({
       images: [
         {
           url: ogImage,
-          alt: project.cardAltText ?? `${project.title} scenic design by Gretchen Ugalde`,
+          alt: resolvedProject.cardAltText ?? `${resolvedProject.title} scenic design by Gretchen Ugalde`,
         },
       ],
     },

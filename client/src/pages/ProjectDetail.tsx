@@ -1,12 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "wouter";
 import { ArrowLeft, ArrowRight, Pause, Play, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getProjectById, getProjectSlug, projects } from "@/data/projects";
+import { resolveProjectMedia } from "@/content/media";
+import { getProjectById, getProjectSlug, projects } from "@/content/projects";
 import { Button } from "@/components/ui/button";
 
 function renderDesignParagraph(paragraph: string, useDropcap: boolean) {
@@ -271,6 +273,7 @@ export default function ProjectDetail() {
   const hasMountedRef = useRef(false);
   const slug = Array.isArray(id) ? id[0] : id;
   const project = slug ? getProjectById(slug) : undefined;
+  const resolvedProject = project ? resolveProjectMedia(project) : undefined;
 
   useEffect(() => {
     if (!project) return;
@@ -283,7 +286,7 @@ export default function ProjectDetail() {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [project?.id, project]);
 
-  if (!project) {
+  if (!project || !resolvedProject) {
     return (
       <div className="flex min-h-screen flex-col">
         <Header />
@@ -300,32 +303,34 @@ export default function ProjectDetail() {
     );
   }
 
-  const projectMeta = [project.theatre, project.year].filter(Boolean);
-  const relatedProjects = projects.filter((entry) => entry.id !== project.id);
+  const projectMeta = [resolvedProject.theatre, resolvedProject.year].filter(Boolean);
+  const relatedProjects = projects
+    .filter((entry) => entry.id !== project.id)
+    .map((entry) => resolveProjectMedia(entry));
   const designStatementAfterProduction =
-    project.layout?.designStatementAfterProduction ?? false;
-  const designStatementParagraphs = project.designStatement
+    resolvedProject.layout?.designStatementAfterProduction ?? false;
+  const designStatementParagraphs = resolvedProject.designStatement
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
   const hasDesignStatement = designStatementParagraphs.length > 0;
   const renderingBlocks =
-    project.galleries.renderingBlocks && project.galleries.renderingBlocks.length > 0
-      ? project.galleries.renderingBlocks
-      : project.galleries.renderings && project.galleries.renderings.length > 0
+    resolvedProject.galleries.renderingBlocks && resolvedProject.galleries.renderingBlocks.length > 0
+      ? resolvedProject.galleries.renderingBlocks
+      : resolvedProject.galleries.renderings && resolvedProject.galleries.renderings.length > 0
         ? [
             {
               title: "Renderings",
               description: "Scenic renderings and visual development for the production.",
-              images: project.galleries.renderings,
+              images: resolvedProject.galleries.renderings,
             },
           ]
         : [];
   const lightboxImages = [
     ...renderingBlocks.flatMap((block) => block.images),
-    ...(project.galleries.production ?? []),
-    ...(project.galleries.research ?? []),
-    ...(project.galleries.drafting ?? []),
+    ...(resolvedProject.galleries.production ?? []),
+    ...(resolvedProject.galleries.research ?? []),
+    ...(resolvedProject.galleries.drafting ?? []),
   ];
   const lightboxImage =
     lightboxIndex !== null ? lightboxImages[lightboxIndex] ?? null : null;
@@ -365,18 +370,18 @@ export default function ProjectDetail() {
   }, [lightboxIndex, lightboxImages.length]);
 
   const creditEntries = [
-    { label: "Director", value: project.credits.director },
-    { label: "Dramaturgy", value: project.credits.dramaturgy },
-    { label: "Choreographer", value: project.credits.choreographer },
-    { label: "Music Director", value: project.credits.musicDirector },
-    { label: "Composer", value: project.credits.composer },
-    { label: "Scenic Designer", value: project.credits.scenicDesigner },
-    { label: "Costume Designer", value: project.credits.costumeDesigner },
-    { label: "Lighting Designer", value: project.credits.lightingDesigner },
-    { label: "Sound Designer", value: project.credits.soundDesigner },
-    { label: "Projection Designer", value: project.credits.projectionDesigner },
-    { label: "Stage Manager", value: project.credits.stageManager },
-    { label: "Photography", value: project.credits.photography },
+    { label: "Director", value: resolvedProject.credits.director },
+    { label: "Dramaturgy", value: resolvedProject.credits.dramaturgy },
+    { label: "Choreographer", value: resolvedProject.credits.choreographer },
+    { label: "Music Director", value: resolvedProject.credits.musicDirector },
+    { label: "Composer", value: resolvedProject.credits.composer },
+    { label: "Scenic Designer", value: resolvedProject.credits.scenicDesigner },
+    { label: "Costume Designer", value: resolvedProject.credits.costumeDesigner },
+    { label: "Lighting Designer", value: resolvedProject.credits.lightingDesigner },
+    { label: "Sound Designer", value: resolvedProject.credits.soundDesigner },
+    { label: "Projection Designer", value: resolvedProject.credits.projectionDesigner },
+    { label: "Stage Manager", value: resolvedProject.credits.stageManager },
+    { label: "Photography", value: resolvedProject.credits.photography },
   ].filter((entry) => entry.value);
 
   return (
@@ -384,7 +389,7 @@ export default function ProjectDetail() {
       <Header />
 
       <main className="flex-1 pt-20">
-        <div key={project.id} className="project-page-fade">
+        <div key={resolvedProject.id} className="project-page-fade">
             <section className="px-4 pb-10 pt-16 sm:px-6 sm:pb-14 lg:px-8">
               <div className="container">
                 <div className="mx-auto max-w-4xl text-center">
@@ -392,7 +397,7 @@ export default function ProjectDetail() {
                     Scenic Design Portfolio
                   </p>
                   <h1 className="text-[3.9rem] font-serif leading-[0.92] tracking-[-0.04em] text-foreground sm:text-[5.7rem] md:text-[6.5rem]">
-                    <span className="italic">{project.title}</span>
+                    <span className="italic">{resolvedProject.title}</span>
                   </h1>
                   <div className="gold-rule mx-auto mt-8 h-px w-28" />
                   {projectMeta.length > 0 && (
@@ -401,7 +406,7 @@ export default function ProjectDetail() {
                     </p>
                   )}
                   <p className="font-editorial mx-auto mt-8 max-w-2xl text-[1.12rem] leading-[1.95] text-foreground/78 sm:text-[1.24rem]">
-                    {project.description}
+                    {resolvedProject.description}
                   </p>
                 </div>
               </div>
@@ -431,7 +436,7 @@ export default function ProjectDetail() {
                         <img
                           src={block.images[0]}
                           alt={
-                            block.altTexts?.[0] ?? `${project.title} rendering 1`
+                            block.altTexts?.[0] ?? `${resolvedProject.title} rendering 1`
                           }
                           className="block h-[76vh] max-w-full cursor-pointer rounded-[0.65rem] object-contain shadow-[0_18px_50px_rgba(94,74,30,0.07)]"
                           onClick={() => openLightbox(block.images[0])}
@@ -445,7 +450,7 @@ export default function ProjectDetail() {
                       title={block.title}
                       description={block.description}
                       altTexts={block.altTexts}
-                      imageAltLabel={`${project.title} rendering`}
+                      imageAltLabel={`${resolvedProject.title} rendering`}
                       onImageClick={openLightbox}
                     />
                   ) : (
@@ -454,7 +459,7 @@ export default function ProjectDetail() {
                       images={block.images}
                     title={block.title ?? "Renderings"}
                     description={block.description}
-                    imageAltLabel={`${project.title} rendering`}
+                    imageAltLabel={`${resolvedProject.title} rendering`}
                     altTexts={block.altTexts}
                     objectClassName="object-contain"
                     frameHeightClassName={
@@ -487,13 +492,13 @@ export default function ProjectDetail() {
                 </section>
               )}
 
-              {project.galleries.production && project.galleries.production.length > 0 && (
+              {resolvedProject.galleries.production && resolvedProject.galleries.production.length > 0 && (
                 <section className="space-y-4">
                   <h2 className="text-2xl font-serif italic text-foreground sm:text-3xl">
                     Production Photos
                   </h2>
                   <div className="space-y-5">
-                    {project.galleries.production.map((image, index) => (
+                    {resolvedProject.galleries.production.map((image, index) => (
                       <div
                         key={index}
                         className="relative cursor-pointer overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)]"
@@ -502,8 +507,8 @@ export default function ProjectDetail() {
                         <img
                           src={image}
                           alt={
-                            project.galleryAltText?.production?.[index] ??
-                            `${project.title} production photo ${index + 1}`
+                            resolvedProject.galleryAltText?.production?.[index] ??
+                            `${resolvedProject.title} production photo ${index + 1}`
                           }
                           className="block max-h-[82vh] w-full object-contain"
                         />
@@ -533,24 +538,24 @@ export default function ProjectDetail() {
                 </section>
               )}
 
-              {project.galleries.research && project.galleries.research.length > 0 && (
+              {resolvedProject.galleries.research && resolvedProject.galleries.research.length > 0 && (
                 <ProjectSlideshow
-                  images={project.galleries.research}
+                  images={resolvedProject.galleries.research}
                   title="Research"
-                  imageAltLabel={`${project.title} research image`}
-                  altTexts={project.galleryAltText?.research}
+                  imageAltLabel={`${resolvedProject.title} research image`}
+                  altTexts={resolvedProject.galleryAltText?.research}
                   autoplayMs={7600}
                   initialDelayMs={2800}
                   onImageClick={openLightbox}
                 />
               )}
 
-              {project.galleries.drafting && project.galleries.drafting.length > 0 && (
+              {resolvedProject.galleries.drafting && resolvedProject.galleries.drafting.length > 0 && (
                 <ProjectSlideshow
-                  images={project.galleries.drafting}
+                  images={resolvedProject.galleries.drafting}
                   title="Drafting"
-                  imageAltLabel={`${project.title} drafting image`}
-                  altTexts={project.galleryAltText?.drafting}
+                  imageAltLabel={`${resolvedProject.title} drafting image`}
+                  altTexts={resolvedProject.galleryAltText?.drafting}
                   roundedClassName="rounded-none"
                   autoplayMs={9200}
                   initialDelayMs={4300}
@@ -606,13 +611,14 @@ export default function ProjectDetail() {
                     <Link key={entry.id} href={`/portfolio/${getProjectSlug(entry)}`}>
                       <div className="group cursor-pointer">
                         <div className="relative aspect-[4/3] overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)] transition-transform duration-300 group-hover:-translate-y-1">
-                          <img
+                          <Image
                             src={entry.cardImage ?? entry.heroImage}
                             alt={
                               entry.cardAltText ?? `${entry.title} - Scenic Design by Gretchen Ugalde`
                             }
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            loading="lazy"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         </div>
                         <div className="pt-5 text-center">

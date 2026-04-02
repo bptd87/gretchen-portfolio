@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { resolveMediaUrl } from "@/content/media";
+import { aboutPageContent } from "@/content/pages/about";
 import { Mail } from "lucide-react";
 import { Link } from "wouter";
 
@@ -14,15 +17,15 @@ export default function About() {
         <section className="px-4 pb-12 pt-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-[0.72rem] uppercase tracking-[0.42em] text-accent">
-              About
+              {aboutPageContent.eyebrow}
             </p>
             <h1 className="mt-4 text-5xl font-serif leading-none text-foreground sm:text-7xl">
-              <span>Gretchen </span>
-              <span className="italic">Ugalde</span>
+              <span>{aboutPageContent.title.first}</span>
+              <span className="italic">{aboutPageContent.title.last}</span>
             </h1>
             <div className="gold-rule mx-auto mt-6 h-px w-40" />
             <p className="font-editorial mx-auto mt-7 max-w-xl text-[1.2rem] leading-[1.85] text-foreground/80 sm:text-[1.35rem]">
-              A scenic designer shaped by cross-cultural storytelling, visual atmosphere, and a love of theatre that feels deeply lived-in.
+              {aboutPageContent.intro}
             </p>
           </div>
         </section>
@@ -32,24 +35,28 @@ export default function About() {
             <div className="grid items-start gap-12 md:grid-cols-2">
               <div className="space-y-8">
                 <div className="soft-panel aspect-[3/4] overflow-hidden rounded-[1.5rem]">
-                  <img
-                    src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WLZvgHRSbZmeHpcZ.jpg"
-                    alt="Gretchen Ugalde - Scenic Designer"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
+                  <Image
+                    src={resolveMediaUrl(aboutPageContent.images.portrait.src) ?? aboutPageContent.images.portrait.src}
+                    alt={aboutPageContent.images.portrait.alt}
+                    width={1200}
+                    height={1600}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="h-full w-full object-cover"
                   />
                 </div>
 
                 <div className="soft-panel overflow-hidden rounded-[1.5rem]">
-                  <img
-                    src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RCPTDoElJmQieRNt.jpg"
-                    alt="Gretchen Ugalde with her grandmother"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
+                  <Image
+                    src={resolveMediaUrl(aboutPageContent.images.grandmother.src) ?? aboutPageContent.images.grandmother.src}
+                    alt={aboutPageContent.images.grandmother.alt}
+                    width={1400}
+                    height={1000}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="h-auto w-full object-cover"
                   />
                   <div className="border-t border-border/70 px-6 py-5 text-center">
                     <p className="text-sm italic text-muted-foreground">
-                      With my granny - my biggest inspiration and supporter
+                      {aboutPageContent.images.grandmother.caption}
                     </p>
                   </div>
                 </div>
@@ -57,33 +64,17 @@ export default function About() {
 
               <div className="space-y-6">
                 <h2 className="text-3xl font-serif text-foreground sm:text-4xl">
-                  <span>Gretchen </span>
-                  <span className="italic">Ugalde</span>
+                  <span>{aboutPageContent.title.first}</span>
+                  <span className="italic">{aboutPageContent.title.last}</span>
                 </h2>
                 <p className="text-[0.72rem] uppercase tracking-[0.35em] text-accent">
-                  Scenic Designer
+                  {aboutPageContent.subtitle}
                 </p>
 
                 <div className="font-editorial space-y-4 text-[1.08rem] leading-[1.95] text-foreground/82">
-                  <p>
-                    Hey there! I'm Gretchen Ugalde, a scenic designer with roots in both Cebu City, Philippines, and the Bay Area.
-                  </p>
-
-                  <p>
-                    Growing up, I bounced between both worlds every few years, but what remained constant was that I found my footing again through the moments I would watch movies with my father, consume art, and talk to locals about life experiences. These experiences taught me the universal power of storytelling.
-                  </p>
-
-                  <p>
-                    My passion for design took off in college, where I immersed myself in theatre. Since then, I've continued working on my craft with Okoboji Summer Theatre, Maples Repertory Theatre, and Stephens College in central Missouri.
-                  </p>
-
-                  <p>
-                    Currently, I'm pursuing my MFA at UC Irvine. My goal for the future is to tell many stories across the country and beyond. Most importantly, stories that my granny will love! The good thing is that she loves every story she experiences!
-                  </p>
-
-                  <p>
-                    When I'm not designing, you can catch me hunting for trinkets at HomeGoods or TJ Maxx!
-                  </p>
+                  {aboutPageContent.biography.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
                 </div>
 
                 <div className="soft-panel rounded-[1.4rem] px-6 py-7">
@@ -94,10 +85,10 @@ export default function About() {
                     <p className="flex items-center gap-3">
                       <Mail className="w-5 h-5 text-accent" />
                       <a
-                        href="mailto:contact@gretchenugalde.com"
+                        href={`mailto:${aboutPageContent.contact.email}`}
                         className="hover:text-accent transition-colors"
                       >
-                        contact@gretchenugalde.com
+                        {aboutPageContent.contact.email}
                       </a>
                     </p>
                     <div>
@@ -105,7 +96,7 @@ export default function About() {
                         href="/resume"
                         className="inline-flex rounded-full border border-accent/70 px-5 py-2.5 font-sans text-[0.74rem] uppercase tracking-[0.24em] text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
                       >
-                        View Resume
+                        {aboutPageContent.contact.resumeLabel}
                       </Link>
                     </div>
                   </div>
@@ -127,16 +118,14 @@ export default function About() {
                   Education
                 </h3>
                 <ul className="space-y-3 leading-7 text-muted-foreground">
-                  <li>
-                    <strong className="text-foreground">MFA in Scenic Design</strong>
-                    <br />
-                    UC Irvine (Current)
-                  </li>
-                  <li>
-                    <strong className="text-foreground">Bachelor of Arts in Drama</strong>
-                    <br />
-                    University of California, Irvine
-                  </li>
+                  {aboutPageContent.education.map((entry) => (
+                    <li key={`${entry.degree}-${entry.school}`}>
+                      <strong className="text-foreground">{entry.degree}</strong>
+                      <br />
+                      {entry.school}
+                      {entry.note ? ` (${entry.note})` : ""}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -145,10 +134,9 @@ export default function About() {
                   Professional Experience
                 </h3>
                 <ul className="space-y-3 leading-7 text-muted-foreground">
-                  <li>Okoboji Summer Theatre</li>
-                  <li>Maples Repertory Theatre</li>
-                  <li>Stephens College</li>
-                  <li>Various Regional Productions</li>
+                  {aboutPageContent.experience.map((entry) => (
+                    <li key={entry}>{entry}</li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -165,7 +153,7 @@ export default function About() {
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
               <a
-                href="https://www.instagram.com/gretchenugalde"
+                href={aboutPageContent.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-accent/70 px-6 py-3 text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
@@ -176,7 +164,7 @@ export default function About() {
                 Instagram
               </a>
               <a
-                href="https://www.pinterest.com/gretchenugalde"
+                href={aboutPageContent.social.pinterest}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-accent/70 px-6 py-3 text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground"

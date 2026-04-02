@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { resolveMediaUrl } from "@/content/media";
 import { Link } from "wouter";
-import { getProjectSlug, projects } from "@/data/projects";
+import { getProjectSlug, projects } from "@/content/projects";
 
 export default function Portfolio() {
   return (
@@ -32,18 +34,22 @@ export default function Portfolio() {
         <section className="px-4 pb-16 pt-2 sm:px-6 sm:pb-20 lg:px-8">
           <div className="container">
             <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project) => (
+              {projects.map((project, index) => (
                 <Link key={project.id} href={`/portfolio/${getProjectSlug(project)}`}>
                   <div className="group cursor-pointer">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-[0.65rem] bg-secondary shadow-[0_18px_50px_rgba(94,74,30,0.07)] transition-transform duration-300 group-hover:-translate-y-1">
-                      <img
-                        src={project.cardImage ?? project.heroImage}
+                      <Image
+                        src={resolveMediaUrl(project.cardImage ?? project.heroImage) ?? project.cardImage ?? project.heroImage}
                         alt={
                           project.cardAltText ??
                           `${project.title} - Scenic Design by Gretchen Ugalde`
                         }
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={72}
+                        priority={index < 3}
+                        loading={index < 6 ? "eager" : "lazy"}
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                     <div className="pt-5 text-center">

@@ -8,6 +8,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "check": "tsc --noEmit",
+    "media:blob": "tsx scripts/migrate-media-to-blob.ts",
     "format": "prettier --write .",
     "test": "vitest run",
     "db:push": "drizzle-kit generate && drizzle-kit migrate"

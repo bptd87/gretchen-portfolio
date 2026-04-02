@@ -1,8 +1,10 @@
+import Image from "next/image";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { resolveMediaUrl } from "@/content/media";
 import { ChevronDown, Image as ImageIcon } from "lucide-react";
-import { getFeaturedProjects, getProjectSlug } from "@/data/projects";
+import { getFeaturedProjects, getProjectSlug } from "@/content/projects";
 
 export default function Home() {
   const featuredProjects = getFeaturedProjects();
@@ -65,11 +67,12 @@ export default function Home() {
                 >
                   <div className="absolute inset-0">
                     {project.heroImage ? (
-                      <img
-                        src={project.heroImage}
+                      <Image
+                        src={resolveMediaUrl(project.heroImage) ?? project.heroImage}
                         alt={`${project.title} scenic design`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-secondary to-background flex items-center justify-center">

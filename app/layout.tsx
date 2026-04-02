@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: "Gretchen Ugalde | Scenic Design Portfolio",
   description:
     "Scenic design portfolio for Gretchen Ugalde featuring theatrical production work, process imagery, and creative collaboration.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-icon.svg", type: "image/svg+xml" },
+    ],
+  },
 };
 
 export default function RootLayout({
