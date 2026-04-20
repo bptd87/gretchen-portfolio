@@ -397,7 +397,7 @@ export default function ProjectDetail() {
       <Header />
 
       <main className="flex-1 pt-20">
-        <div key={resolvedProject.id} className="project-page-fade">
+        <div key={resolvedProject.id}>
             <section className="px-4 pb-10 pt-16 sm:px-6 sm:pb-14 lg:px-8">
               <div className="container">
                 <div className="mx-auto max-w-4xl text-center">

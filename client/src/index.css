@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -41,9 +40,9 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-serif: "Playfair Display", var(--font-display), "Times New Roman", serif;
+  --font-serif: var(--font-display), "Playfair Display", "Times New Roman", serif;
   --font-sans: var(--font-body), "Helvetica Neue", Arial, sans-serif;
-  --font-editorial: "Source Serif 4", Georgia, serif;
+  --font-editorial: var(--font-editorial-face), "Source Serif 4", Georgia, serif;
 }
 
 :root {
@@ -163,16 +162,12 @@
     font-family: var(--font-editorial);
   }
 
-.project-page-fade {
-  animation: project-page-fade 420ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 .project-dropcap-letter {
   float: left;
   display: block;
   margin-right: 0.16em;
   margin-top: 0.05em;
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-serif);
   font-size: 5.6rem;
   line-height: 0.72;
   font-weight: 700;
@@ -192,18 +187,6 @@
       padding-right: 2rem;
       max-width: 1280px;
     }
-  }
-}
-
-@keyframes project-page-fade {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 

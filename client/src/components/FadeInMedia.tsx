@@ -1,10 +1,10 @@
 "use client";
 
 import Image, { type ImageProps } from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 const shimmerClass =
-  "bg-[linear-gradient(135deg,rgba(201,152,43,0.08),rgba(255,255,255,0.35),rgba(201,152,43,0.06))]";
+  "bg-[linear-gradient(135deg,rgba(201,152,43,0.04),rgba(255,255,255,0.18),rgba(201,152,43,0.03))]";
 
 type FadeInNextImageProps = Omit<ImageProps, "onLoad"> & {
   wrapperClassName?: string;
@@ -23,11 +23,11 @@ export function FadeInNextImage({
   const imageRef = useRef<HTMLImageElement | null>(null);
   const usesFill = "fill" in props && Boolean(props.fill);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsLoaded(false);
   }, [src]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth > 0) {
       setIsLoaded(true);
@@ -48,7 +48,7 @@ export function FadeInNextImage({
           src={src}
           alt={alt}
           onLoad={() => setIsLoaded(true)}
-          className={`${className} transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"} ${wrapperClassName}`}
+          className={`${className} ${wrapperClassName}`}
         />
       </>
     );
@@ -67,7 +67,7 @@ export function FadeInNextImage({
         src={src}
         alt={alt}
         onLoad={() => setIsLoaded(true)}
-        className={`${className} transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={className}
       />
     </div>
   );
@@ -92,11 +92,11 @@ export function FadeInImg({
   const [isLoaded, setIsLoaded] = useState(false);
   const imageRef = useRef<HTMLImageElement | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsLoaded(false);
   }, [resetKey, src]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth > 0) {
       setIsLoaded(true);
@@ -119,7 +119,7 @@ export function FadeInImg({
           setIsLoaded(true);
           onLoad?.(event);
         }}
-        className={`${className} transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={className}
       />
     </div>
   );
