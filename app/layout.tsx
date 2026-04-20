@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Manrope, Playfair_Display, Source_Serif_4 } from "next/font/google";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -9,6 +10,24 @@ const siteUrl = new URL("https://www.gretchenugalde.com");
 const siteTitle = "Gretchen Ugalde | Scenic Design Portfolio";
 const siteDescription =
   "Scenic design portfolio for Gretchen Ugalde featuring theatrical production work, process imagery, and creative collaboration.";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-editorial-face",
+});
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
@@ -43,15 +62,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap"
-        />
-      </head>
-      <body className="antialiased">
+      <body
+        className={`${manrope.variable} ${playfairDisplay.variable} ${sourceSerif.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
         <Analytics />
         <SpeedInsights />
