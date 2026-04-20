@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import { aboutPageContent } from "@/content/pages/about";
 import { Link } from "wouter";
 
 export default function Footer() {
@@ -6,25 +7,15 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border/70 bg-transparent">
-      <div className="container py-14">
-        <div className="mb-14 max-w-md">
-          <p className="font-serif text-4xl italic leading-tight text-foreground sm:text-5xl">
-            Spaces that hold
-            <br />
-            story and atmosphere.
-          </p>
-        </div>
-        <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr]">
+      <div className="container py-12">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr] md:items-start">
           <div>
             <p className="font-sans text-[0.72rem] uppercase tracking-[0.35em] text-muted-foreground">
-              Scenic Design Portfolio
+              Scenic Designer
             </p>
-            <h3 className="mt-3 text-3xl font-serif text-foreground">
+            <h3 className="mt-3 text-3xl font-serif italic text-foreground">
               Gretchen Ugalde
             </h3>
-            <p className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground">
-              Theatre environments shaped with elegance, clarity, and a love of visual storytelling.
-            </p>
           </div>
 
           <div>
@@ -54,23 +45,23 @@ export default function Footer() {
             <h4 className="font-sans mb-4 text-[0.72rem] uppercase tracking-[0.35em] text-accent">
               Connect
             </h4>
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               <a
-                href="mailto:gretch.ugalde@gmail.com"
-                className="text-muted-foreground transition-colors hover:text-accent"
+                href={`mailto:${aboutPageContent.contact.email}`}
+                className="group flex h-12 w-12 items-center justify-center rounded-[8px] border border-accent/60 bg-background/70 text-accent transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-accent-foreground"
                 aria-label="Email Gretchen Ugalde"
               >
-                <Mail className="h-6 w-6" />
+                <Mail className="h-5 w-5" />
               </a>
               <a
-                href="https://www.instagram.com/gretchenugalde"
+                href={aboutPageContent.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground transition-colors hover:text-accent"
+                className="group flex h-12 w-12 items-center justify-center rounded-[8px] border border-accent/60 bg-background/70 text-accent transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-accent-foreground"
                 aria-label="Instagram"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="h-5 w-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -78,14 +69,14 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://www.pinterest.com/gretchenugalde"
+                href={aboutPageContent.social.pinterest}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground transition-colors hover:text-accent"
+                className="group flex h-12 w-12 items-center justify-center rounded-[8px] border border-accent/60 bg-background/70 text-accent transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-accent-foreground"
                 aria-label="Pinterest"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="h-5 w-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >

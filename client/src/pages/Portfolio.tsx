@@ -25,7 +25,7 @@ export default function Portfolio() {
               </h1>
               <div className="gold-rule mx-auto mt-8 h-px w-28" />
               <p className="font-editorial mx-auto mt-8 max-w-2xl text-[1.12rem] leading-[1.95] text-foreground/78 sm:text-[1.25rem]">
-                Scenic designer crafting theatrical worlds with elegance, narrative clarity, and a deep attention to atmosphere.
+                Scenic design shaped by Cebu, the Bay Area, and Southern California - building spaces where memory, place, and people's journeys come alive.
               </p>
             </div>
           </div>
