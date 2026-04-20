@@ -19,10 +19,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "files.manuscdn.com",
-      },
-      {
-        protocol: "https",
         hostname: "**.public.blob.vercel-storage.com",
       },
     ],

@@ -9,11 +9,11 @@ export const aboutPageContent = {
     "A scenic designer shaped by cross-cultural storytelling, visual atmosphere, and a love of theatre that feels deeply lived-in.",
   images: {
     portrait: {
-      src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WLZvgHRSbZmeHpcZ.jpg",
+      src: "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/pages/about/portrait.webp",
       alt: "Gretchen Ugalde - Scenic Designer",
     },
     grandmother: {
-      src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RCPTDoElJmQieRNt.jpg",
+      src: "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/pages/about/grandmother.webp",
       alt: "Gretchen Ugalde with her grandmother",
       caption: "With my granny - my biggest inspiration and supporter",
     },

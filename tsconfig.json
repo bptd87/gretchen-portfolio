@@ -3,8 +3,6 @@
     "next-env.d.ts",
     "app/**/*",
     "client/src/**/*",
-    "shared/**/*",
-    "server/**/*",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
@@ -14,11 +12,7 @@
     "dist",
     "**/*.test.ts",
     "client/src/App.tsx",
-    "client/src/main.tsx",
-    "server/index.ts",
-    "server/_core/index.ts",
-    "server/_core/vite.ts",
-    "vite.config.ts"
+    "client/src/main.tsx"
   ],
   "compilerOptions": {
     "incremental": true,
@@ -48,9 +42,6 @@
     "paths": {
       "@/*": [
         "./client/src/*"
-      ],
-      "@shared/*": [
-        "./shared/*"
       ],
       "wouter": [
         "./client/src/lib/wouter-compat.tsx"

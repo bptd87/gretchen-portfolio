@@ -161,7 +161,5 @@ export const blobMediaMap: Record<string, string> = {
   "https://static.wixstatic.com/media/dd35c7_d801c2b664154bf5a3b275d905429a6f~mv2.png": "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/projects/gods-of-comedy/production/04.webp",
   "https://static.wixstatic.com/media/dd35c7_6290db6aef4f45b6a4e03b59931ac3fb~mv2.jpg/v1/fill/w_896,h_598,fp_0.48_0.36,q_90,enc_avif,quality_auto/dd35c7_6290db6aef4f45b6a4e03b59931ac3fb~mv2.jpg": "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/projects/baskerville-a-sherlock-holmes-mystery/card/cover.webp",
   "https://static.wixstatic.com/media/dd35c7_dc01c8f8ff3c4c528f632d7fc5b1708b~mv2.jpg/v1/fill/w_896,h_603,fp_0.5_0.6,q_90,enc_avif,quality_auto/dd35c7_dc01c8f8ff3c4c528f632d7fc5b1708b~mv2.jpg": "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/projects/the-little-mermaid/card/cover.webp",
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WLZvgHRSbZmeHpcZ.jpg": "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/pages/about/portrait.webp",
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RCPTDoElJmQieRNt.jpg": "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/web/pages/about/grandmother.webp",
   "/gretchen-ugalde-resume.pdf": "https://btak3hpbojsonmnb.public.blob.vercel-storage.com/pages/resume/gretchen-ugalde-resume.pdf"
 };
