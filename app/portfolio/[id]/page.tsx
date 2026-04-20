@@ -8,6 +8,32 @@ export function generateStaticParams() {
   return projects.map((project) => ({ id: getProjectSlug(project) }));
 }
 
+function formatMetaDescription(description: string) {
+  const maxLength = 155;
+
+  if (description.length <= maxLength) {
+    return description;
+  }
+
+  const snippet = description.slice(0, maxLength - 3).trim();
+  const sentenceEnd = Math.max(
+    snippet.lastIndexOf("."),
+    snippet.lastIndexOf("!"),
+    snippet.lastIndexOf("?"),
+  );
+
+  if (sentenceEnd >= 80) {
+    return snippet.slice(0, sentenceEnd + 1);
+  }
+
+  const lastSpace = snippet.lastIndexOf(" ");
+  const trimmed = snippet
+    .slice(0, lastSpace > 0 ? lastSpace : snippet.length)
+    .replace(/[.,;:]+$/, "");
+
+  return `${trimmed}...`;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -26,9 +52,9 @@ export async function generateMetadata({
 
   const title = `${resolvedProject.title} | Gretchen Ugalde`;
   const contextParts = [resolvedProject.theatre, resolvedProject.year].filter(Boolean);
-  const description = contextParts.length > 0
+  const description = formatMetaDescription(contextParts.length > 0
     ? `${resolvedProject.title} scenic design by Gretchen Ugalde for ${contextParts.join(", ")}. ${resolvedProject.description}`
-    : `${resolvedProject.title} scenic design by Gretchen Ugalde. ${resolvedProject.description}`;
+    : `${resolvedProject.title} scenic design by Gretchen Ugalde. ${resolvedProject.description}`);
   const ogImage = resolvedProject.cardImage ?? resolvedProject.heroImage;
 
   const canonicalSlug = getProjectSlug(project);
@@ -43,6 +69,7 @@ export async function generateMetadata({
       title,
       description,
       url: `/portfolio/${canonicalSlug}`,
+      siteName: "Gretchen Ugalde",
       type: "article",
       images: [
         {

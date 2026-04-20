@@ -26,7 +26,7 @@ export const aboutPageContent = {
     "When I'm not designing, you can catch me hunting for trinkets at HomeGoods or TJ Maxx!",
   ],
   contact: {
-    email: "contact@gretchenugalde.com",
+    email: "gretch.ugalde@gmail.com",
     resumeHref: "/gretchen-ugalde-resume.pdf",
     resumeLabel: "View Resume",
   },

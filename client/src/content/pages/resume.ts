@@ -7,8 +7,6 @@ export const resumePageContent = {
   intro:
     "Scenic designer with professional work spanning regional theatre, graduate training, and collaborative production across new work, musicals, and classical storytelling.",
   contact: {
-    phoneHref: "tel:9253243410",
-    phoneLabel: "925.324.3410",
     emailHref: "mailto:gretch.ugalde@gmail.com",
     emailLabel: "gretch.ugalde@gmail.com",
     websiteHref: "https://www.gretchenugalde.com",

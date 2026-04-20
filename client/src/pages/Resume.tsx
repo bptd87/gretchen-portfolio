@@ -6,7 +6,7 @@ import { FadeInNextImage } from "@/components/FadeInMedia";
 import { resolveMediaUrl } from "@/content/media";
 import { resumePageContent } from "@/content/pages/resume";
 import { projects, getProjectSlug } from "@/content/projects";
-import { ExternalLink, Mail, Phone } from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 import { Link } from "wouter";
 
 function normalizeTitle(value: string) {
@@ -91,13 +91,6 @@ export default function Resume() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-              <a
-                href={resumePageContent.contact.phoneHref}
-                className="inline-flex items-center gap-3 transition-colors hover:text-accent"
-              >
-                <Phone className="h-4 w-4 text-accent" />
-                {resumePageContent.contact.phoneLabel}
-              </a>
               <a
                 href={resumePageContent.contact.emailHref}
                 className="inline-flex items-center gap-3 transition-colors hover:text-accent"
