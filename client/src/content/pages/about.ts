@@ -49,7 +49,7 @@ export const aboutPageContent = {
     "Various Regional Productions",
   ],
   social: {
-    instagram: "https://www.instagram.com/gretchenugalde",
+    instagram: "https://www.instagram.com/gretchendianeugalde/",
     pinterest: "https://www.pinterest.com/gretchenugalde",
   },
 } as const;

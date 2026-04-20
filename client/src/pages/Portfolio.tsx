@@ -13,25 +13,7 @@ export default function Portfolio() {
       <Header />
 
       <main className="flex-1 pt-20">
-        <section className="px-4 pb-14 pt-18 sm:px-6 sm:pb-18 lg:px-8">
-          <div className="container">
-            <div className="mx-auto max-w-4xl text-center">
-              <p className="mb-5 text-[0.7rem] uppercase tracking-[0.46em] text-accent">
-                Scenic Design Portfolio
-              </p>
-              <h1 className="text-[3.9rem] font-serif leading-[0.92] tracking-[-0.04em] text-foreground sm:text-[5.8rem] md:text-[7rem]">
-                <span className="block">Gretchen</span>
-                <span className="block italic">Ugalde</span>
-              </h1>
-              <div className="gold-rule mx-auto mt-8 h-px w-28" />
-              <p className="font-editorial mx-auto mt-8 max-w-2xl text-[1.12rem] leading-[1.95] text-foreground/78 sm:text-[1.25rem]">
-                Scenic design shaped by Cebu, the Bay Area, and Southern California - building spaces where memory, place, and people's journeys come alive.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 pb-16 pt-2 sm:px-6 sm:pb-20 lg:px-8">
+        <section className="px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8">
           <div className="container">
             <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => (
