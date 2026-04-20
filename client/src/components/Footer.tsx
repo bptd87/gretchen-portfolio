@@ -1,3 +1,4 @@
+import { Mail } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Footer() {
@@ -54,6 +55,13 @@ export default function Footer() {
               Connect
             </h4>
             <div className="flex gap-4">
+              <a
+                href="mailto:gretch.ugalde@gmail.com"
+                className="text-muted-foreground transition-colors hover:text-accent"
+                aria-label="Email Gretchen Ugalde"
+              >
+                <Mail className="h-6 w-6" />
+              </a>
               <a
                 href="https://www.instagram.com/gretchenugalde"
                 target="_blank"

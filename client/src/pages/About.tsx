@@ -153,6 +153,14 @@ export default function About() {
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
               <a
+                href={`mailto:${aboutPageContent.contact.email}`}
+                className="rounded-full border border-accent/70 px-6 py-3 text-accent transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
+                aria-label="Email Gretchen Ugalde"
+              >
+                <Mail className="h-5 w-5" />
+                Email
+              </a>
+              <a
                 href={aboutPageContent.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
